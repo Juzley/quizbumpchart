@@ -15,10 +15,6 @@
       border: 1px solid #000;
     }
 
-    body {
-      background-color: grey;
-    }
-
     line {
       stroke: rgb(0, 0, 0);
       stroke-width: 3;
@@ -33,178 +29,61 @@
 </head>
 
 <body>
-  <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <form>
-          <table>
-            <tr>
-              <th>Team</th>
-              <th>Round 1</th>
-              <th>Round 2</th>
-              <th>Round 3</th>
-            </tr>
-            <tr>
-
-            <td>
-                <input id="team0_name">
-            </td>
-      <td>
-        <input id="team0_round0">
-      </td>
-      <td>
-        <input id="team0_round1">
-      </td>
-      <td>
-        <input id="team0_round2">
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <input id="team1_name">
-      </td>
-      <td>
-        <input id="team1_round0">
-      </td>
-      <td>
-        <input id="team1_round1">
-      </td>
-      <td>
-        <input id="team1_round2">
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <input id="team2_name">
-      </td>
-      <td>
-        <input id="team2_round0">
-      </td>
-      <td>
-        <input id="team2_round1">
-      </td>
-      <td>
-        <input id="team2_round2">
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <input id="team3_name">
-      </td>
-      <td>
-        <input id="team3_round0">
-      </td>
-      <td>
-        <input id="team3_round1">
-      </td>
-      <td>
-        <input id="team3_round2">
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <input id="team4_name">
-      </td>
-      <td>
-        <input id="team4_round0">
-      </td>
-      <td>
-        <input id="team4_round1">
-      </td>
-      <td>
-        <input id="team4_round2">
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <input id="team5_name">
-      </td>
-      <td>
-        <input id="team5_round0">
-      </td>
-      <td>
-        <input id="team5_round1">
-      </td>
-      <td>
-        <input id="team5_round2">
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <input id="team6_name">
-      </td>
-      <td>
-        <input id="team6_round0">
-      </td>
-      <td>
-        <input id="team6_round1">
-      </td>
-      <td>
-        <input id="team6_round2">
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <input id="team7_name">
-      </td>
-      <td>
-        <input id="team7_round0">
-      </td>
-      <td>
-        <input id="team7_round1">
-      </td>
-      <td>
-        <input id="team7_round2">
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <input id="team8_name">
-      </td>
-      <td>
-        <input id="team8_round0">
-      </td>
-      <td>
-        <input id="team8_round1">
-      </td>
-      <td>
-        <input id="team8_round2">
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <input id="team9_name">
-      </td>
-      <td>
-        <input id="team9_round0">
-      </td>
-      <td>
-        <input id="team9_round1">
-      </td>
-      <td>
-        <input id="team9_round2">
-      </td>
-    </tr>
-  </table>
-</form>
+  <nav class="navbar navbar-dark bg-primary">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" 
+            data-target="#menuNavbar" aria-controls="menuNavbar"
+            aria-expanded="false" aria-label="Toggle navigation">
+       <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="menuNavbar">
+      <div class="navbar-nav" role="tablist">
+          <a class="nav-item nav-link active"
+             data-toggle="tab" href="#data" role="tab">Data</a>
+          <a class="nav-item nav-link"
+             data-toggle="tab" href="#chart" role="tab">Chart</a>
       </div>
-      <div class="carousel-item">
-        <div class="container">
-          <svg id="graph" width="500" height=500> </svg>
-        </div>
+    </div>
+  </nav>
+
+  <div class="tab-content">
+    <div class="tab-pane active" id="data" role="tabpanel">
+      <form>
+        <table>
+          <tr>
+            <th>Team</th>
+            <th>Round 1</th>
+            <th>Round 2</th>
+            <th>Round 3</th>
+          </tr>
+          <tr>
+            <td>
+              <input id="team0_name">
+            </td>
+            <td>
+              <input id="team0_round0">
+            </td>
+            <td>
+              <input id="team0_round1">
+            </td>
+            <td>
+              <input id="team0_round2">
+            </td>
+          </tr>
+        </table>
+      </form>
+      <button id="generateButton">Generate Graph</button>
+    </div>
+    <div class="tab-pane" id="chart" role="tabpanel">
+      <svg id="graph" width="500" height=500> </svg>
     </div>
   </div>
-  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
-    </div>
-  <button id="generateButton">Generate Graph</button>
 
+<script src="http://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"
+        integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
+        crossorigin="anonymous"></script>
 <script type='text/javascript'>
 function generateBumpChart() {
   const ROUNDS = 3;
@@ -301,14 +180,10 @@ function generateBumpChart() {
   }
 }
 
+
+
+
 $("#generateButton").click(generateBumpChart);
-</script>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"
-			  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-			  crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"
-        integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
-        crossorigin="anonymous">
 </script>
 </body>
 </html>
