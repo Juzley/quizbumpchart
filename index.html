@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+
+  
+  
+
+  
+  
+  
+
+  
+
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+
+  
+
+  
+
+  
+
+  
+    <link rel="stylesheet" type="text/css" href="/css/result-light.css">
+  
+
+  
+
+  <style type="text/css">
+    #graph {
+  border: 1px solid #000;
+}
+
+line {
+  stroke: rgb(0, 0, 0);
+  stroke-width: 3;
+}
+
+text {
+  fill: black;
+}
+
+  </style>
+
+  <title>Quiz Bump Chart</title>  
+</head>
+
+<body>
+  <svg id="graph" width="500" height=500> </svg>
+<button id="generateButton">Generate Graph</button>
+<form>
+  <table>
+    <tr>
+      <th>Team</th>
+      <th>Round 1</th>
+      <th>Round 2</th>
+      <th>Round 3</th>
+    </tr>
+    <tr>
+      <td>
+        <input id="team0_name">
+      </td>
+      <td>
+        <input id="team0_round0">
+      </td>
+      <td>
+        <input id="team0_round1">
+      </td>
+      <td>
+        <input id="team0_round2">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input id="team1_name">
+      </td>
+      <td>
+        <input id="team1_round0">
+      </td>
+      <td>
+        <input id="team1_round1">
+      </td>
+      <td>
+        <input id="team1_round2">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input id="team2_name">
+      </td>
+      <td>
+        <input id="team2_round0">
+      </td>
+      <td>
+        <input id="team2_round1">
+      </td>
+      <td>
+        <input id="team2_round2">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input id="team3_name">
+      </td>
+      <td>
+        <input id="team3_round0">
+      </td>
+      <td>
+        <input id="team3_round1">
+      </td>
+      <td>
+        <input id="team3_round2">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input id="team4_name">
+      </td>
+      <td>
+        <input id="team4_round0">
+      </td>
+      <td>
+        <input id="team4_round1">
+      </td>
+      <td>
+        <input id="team4_round2">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input id="team5_name">
+      </td>
+      <td>
+        <input id="team5_round0">
+      </td>
+      <td>
+        <input id="team5_round1">
+      </td>
+      <td>
+        <input id="team5_round2">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input id="team6_name">
+      </td>
+      <td>
+        <input id="team6_round0">
+      </td>
+      <td>
+        <input id="team6_round1">
+      </td>
+      <td>
+        <input id="team6_round2">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input id="team7_name">
+      </td>
+      <td>
+        <input id="team7_round0">
+      </td>
+      <td>
+        <input id="team7_round1">
+      </td>
+      <td>
+        <input id="team7_round2">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input id="team8_name">
+      </td>
+      <td>
+        <input id="team8_round0">
+      </td>
+      <td>
+        <input id="team8_round1">
+      </td>
+      <td>
+        <input id="team8_round2">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input id="team9_name">
+      </td>
+      <td>
+        <input id="team9_round0">
+      </td>
+      <td>
+        <input id="team9_round1">
+      </td>
+      <td>
+        <input id="team9_round2">
+      </td>
+    </tr>
+  </table>
+</form>
+
+<script type='text/javascript'>
+function generateBumpChart() {
+  const ROUNDS = 3;
+  const TEAMS = 10;
+  
+  var i, j;
+  var teamName;
+
+  // Clear previous graphs
+  $("line").each(function() {
+    this.parentNode.removeChild(this);
+  })
+
+  // Populate the rounds array. Each element in the array is an object mapping team name to score, e.g.
+  // [{team1: 3, team2: 1, team3: 2}, {team1: 3, team2: 4, team3: 4}, {team1: 3, team2: 5, team3: 4}]
+  var rounds = [];
+  for (i = 0; i < ROUNDS; i++) {
+    for (j = 0; j < TEAMS; j++) {
+      var teamIdStr = "#team" + j.toString();
+      teamName = $(teamIdStr + "_name").val();
+      var score = $(teamIdStr + "_round" + i.toString()).val();
+      if (teamName !== "" && score !== "") {
+        if (rounds.length == i) {
+          rounds.push({});
+        }
+        rounds[i][teamName] = parseInt(score);
+      }
+    }
+  }
+
+  // Work out the positions for each round, we stores these in an object mapping teamname to an array of their positions in each
+  // round, e.g. var teamPositions = {team1: [0, 2, 2], team2: [2, 1, 0], team3: [1, 0, 1]}
+  var teamPositions = {};
+  for (i = 0; i < rounds.length; i++) {
+    var roundScores = [];
+
+    for (teamName in rounds[i]) {
+      if (rounds[i].hasOwnProperty(teamName)) {
+        roundScores.push([teamName, rounds[i][teamName]]);
+      }
+    }
+
+    // roundScores is now an array of [teamname, score] pairs, e.g. [["team 1", 0], ["team 2", 3], ["team 3", 1]]
+    // Sort it to so that the best team is first.
+    roundScores.sort(function(a, b) {
+      return b[1] - a[1];
+    });
+
+    // Add the results into the teamPositions map - the index in the roundScores array is the position for that round.
+    for (j = 0; j < roundScores.length; j++) {
+      teamName = roundScores[j][0];
+      var position = j;
+      if (!teamPositions.hasOwnProperty(teamName)) {
+        teamPositions[teamName] = [position];
+      } else {
+        teamPositions[teamName].push(position);
+      }
+    }
+  }
+
+  // Draw the graph
+  var columnWidth = 100
+  var rowHeight = 100
+
+  for (var teamName in teamPositions) {
+    if (teamPositions.hasOwnProperty(teamName)) {
+      var positions = teamPositions[teamName];
+      
+      var newText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      $(newText)
+      	.text(teamName)
+      	.attr({
+      		x: 0,
+        	y: 15 + positions[0] * rowHeight
+      	});
+      $("#graph").append(newText);
+      
+      for (i = 0; i < positions.length - 1; i++) {      
+        var x1 = columnWidth * i;
+        var y1 = positions[i] * rowHeight;
+        var x2 = columnWidth * (i + 1);
+        var y2 = positions[i + 1] * rowHeight;
+
+        var newLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        $(newLine).attr({
+          x1: x1,
+          y1: y1,
+          x2: x2,
+          y2: y2
+        });
+        $("#graph").append(newLine);
+      }
+    }
+  }
+}
+
+$("#generateButton").click(generateBumpChart);
+</script>
+</body>
+
+</html>
+
