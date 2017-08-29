@@ -5,63 +5,50 @@
   <meta name="robots" content="noindex, nofollow">
   <meta name="googlebot" content="noindex, nofollow">
 
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
+        crossorigin="anonymous">
   
-  
-
-  
-  
-  
-
-  
-
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
-
-  
-
-  
-
-  
-
-  
-    <link rel="stylesheet" type="text/css" href="/css/result-light.css">
-  
-
-  
-
   <style type="text/css">
     #graph {
-  border: 1px solid #000;
-}
+      border: 1px solid #000;
+    }
 
-line {
-  stroke: rgb(0, 0, 0);
-  stroke-width: 3;
-}
+    body {
+      background-color: grey;
+    }
 
-text {
-  fill: black;
-}
+    line {
+      stroke: rgb(0, 0, 0);
+      stroke-width: 3;
+    }
 
+    text {
+      fill: black;
+    }
   </style>
 
   <title>Quiz Bump Chart</title>  
 </head>
 
 <body>
-  <svg id="graph" width="500" height=500> </svg>
-<button id="generateButton">Generate Graph</button>
-<form>
-  <table>
-    <tr>
-      <th>Team</th>
-      <th>Round 1</th>
-      <th>Round 2</th>
-      <th>Round 3</th>
-    </tr>
-    <tr>
-      <td>
-        <input id="team0_name">
-      </td>
+  <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <form>
+          <table>
+            <tr>
+              <th>Team</th>
+              <th>Round 1</th>
+              <th>Round 2</th>
+              <th>Round 3</th>
+            </tr>
+            <tr>
+
+            <td>
+                <input id="team0_name">
+            </td>
       <td>
         <input id="team0_round0">
       </td>
@@ -200,6 +187,23 @@ text {
     </tr>
   </table>
 </form>
+      </div>
+      <div class="carousel-item">
+        <div class="container">
+          <svg id="graph" width="500" height=500> </svg>
+        </div>
+    </div>
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+    </div>
+  <button id="generateButton">Generate Graph</button>
 
 <script type='text/javascript'>
 function generateBumpChart() {
@@ -299,7 +303,12 @@ function generateBumpChart() {
 
 $("#generateButton").click(generateBumpChart);
 </script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+			  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+			  crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"
+        integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
+        crossorigin="anonymous">
+</script>
 </body>
-
 </html>
-
