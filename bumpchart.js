@@ -78,7 +78,7 @@ BumpChart = (function ($) {
 
     function drawChart(teamPositions) {
         var columnWidth,
-            rowHeight,
+            rowHeight = 50,
             teamName,
             teamNameWidth,
             teamNameHeight = 30,
@@ -88,11 +88,10 @@ BumpChart = (function ($) {
             i;
 
         ctx = $("#graph")[0].getContext("2d");
-        ctx.canvas.height = 1000;
-        ctx.canvas.width = 1000;
-        ctx.font = teamNameHeight.toString() + "pt Arial";
+        ctx.canvas.height = rowHeight * Object.keys(teamPositions).length;
+        ctx.canvas.width = $(window).width() * 0.95;
 
-        rowHeight = ctx.canvas.height / Object.keys(teamPositions).length;
+        ctx.font = teamNameHeight.toString() + "pt Arial";
 
         // Find the width of the teamname columns
         for (teamName in teamPositions) {
@@ -162,5 +161,6 @@ BumpChart = (function ($) {
 
         $("#addTeamButton").click(function () { addTeam(); });
         $("#chart-tab").click(function () { drawChart(calcPositions()); });
+        $(window).resize(function () { drawChart(calcPositions()); });
     }());
 }($));
