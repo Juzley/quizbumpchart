@@ -81,44 +81,46 @@ BumpChart = (function ($) {
             rowHeight = 100,
             teamName,
             positions,
-            newText,
-            newLine,
-            x1,
-            y1,
-            x2,
-            y2,
+            ctx,
             i;
+
+        ctx = $("#graph")[0].getContext("2d");
+        ctx.canvas.height = 300;
+        ctx.canvas.width = 300;
 
         for (teamName in teamPositions) {
             if (teamPositions.hasOwnProperty(teamName)) {
                 positions = teamPositions[teamName];
 
-                newText = document.createElementNS(
-                    'http://www.w3.org/2000/svg',
-                    'text'
-                );
-                newText.appendChild(document.createTextNode(teamName));
-                $(newText).attr({ x: 0, y: 15 + positions[0] * rowHeight });
-                $("#graph").append(newText);
-
-                for (i = 0; i < positions.length - 1; i += 1) {
-                    x1 = columnWidth * i;
-                    y1 = positions[i] * rowHeight;
-                    x2 = columnWidth * (i + 1);
-                    y2 = positions[i + 1] * rowHeight;
-
-                    newLine = document.createElementNS(
-                        'http://www.w3.org/2000/svg',
-                        'line'
+                ctx.beginPath();
+                ctx.moveTo(0, positions[0] * rowHeight);
+                for (i = 1; i < positions.length; i += 1) {
+                    ctx.lineTo(
+                        columnWidth * i,
+                        positions[i] * rowHeight
                     );
-                    $(newLine).attr({ x1: x1, y1: y1, x2: x2, y2: y2 });
-                    $("#graph").append(newLine);
                 }
+                ctx.stroke();
             }
         }
     }
 
+    function addTeam() {
+        var markup =
+            "<tr class='team-input'>" +
+            "<td><input class='teamname-input' id='teamname-input'></td>" +
+            "<td><input class='round0-input' id='teamname-input'></td>" +
+            "<td><input class='round1-input' id='teamname-input'></td>" +
+            "<td><input class='round2-input' id='teamname-input'></td>" +
+            "</tr>";
+        $("#team-input-table tbody").append(markup);
+    }
+
     (function init() {
+        // Add a single team.
+        addTeam();
+
+        $("#addTeamButton").click(function () { addTeam(); });
         $("#generateButton").click(function () {
             drawChart(calcPositions());
         });
