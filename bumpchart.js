@@ -77,27 +77,65 @@ BumpChart = (function ($) {
     }
 
     function drawChart(teamPositions) {
-        var columnWidth = 100,
-            rowHeight = 100,
+        var columnWidth,
+            rowHeight,
             teamName,
+            teamNameWidth,
+            teamNameHeight = 30,
+            maxTeamNameWidth = 0,
             positions,
             ctx,
             i;
 
         ctx = $("#graph")[0].getContext("2d");
-        ctx.canvas.height = 300;
-        ctx.canvas.width = 300;
+        ctx.canvas.height = 1000;
+        ctx.canvas.width = 1000;
+        ctx.font = teamNameHeight.toString() + "pt Arial";
 
+        rowHeight = ctx.canvas.height / Object.keys(teamPositions).length;
+
+        // Find the width of the teamname columns
+        for (teamName in teamPositions) {
+            if (teamPositions.hasOwnProperty(teamName)) {
+                teamNameWidth = ctx.measureText(teamName).width;
+                if (teamNameWidth > maxTeamNameWidth) {
+                    maxTeamNameWidth = teamNameWidth;
+                }
+            }
+        }
+
+        // Draw the teamnames
+        for (teamName in teamPositions) {
+            if (teamPositions.hasOwnProperty(teamName)) {
+                positions = teamPositions[teamName];
+                teamNameWidth = ctx.measureText(teamName).width;
+
+                ctx.fillText(
+                    teamName,
+                    maxTeamNameWidth - teamNameWidth,
+                    (positions[0] + 0.5) * rowHeight + teamNameHeight / 2
+                );
+                ctx.fillText(
+                    teamName,
+                    ctx.canvas.width - maxTeamNameWidth,
+                    (positions[positions.length - 1] + 0.5) * rowHeight +
+                        teamNameHeight / 2
+                );
+            }
+        }
+
+        // Draw the lines
+        columnWidth = (ctx.canvas.width - maxTeamNameWidth * 2) / 2;
         for (teamName in teamPositions) {
             if (teamPositions.hasOwnProperty(teamName)) {
                 positions = teamPositions[teamName];
 
                 ctx.beginPath();
-                ctx.moveTo(0, positions[0] * rowHeight);
+                ctx.moveTo(maxTeamNameWidth, (positions[0] + 0.5) * rowHeight);
                 for (i = 1; i < positions.length; i += 1) {
                     ctx.lineTo(
-                        columnWidth * i,
-                        positions[i] * rowHeight
+                        maxTeamNameWidth + columnWidth * i,
+                        (positions[i] + 0.5) * rowHeight
                     );
                 }
                 ctx.stroke();
@@ -117,12 +155,12 @@ BumpChart = (function ($) {
     }
 
     (function init() {
-        // Add a single team.
+        // Add some team entry areas, assume we'll always have at least 3.
+        addTeam();
+        addTeam();
         addTeam();
 
         $("#addTeamButton").click(function () { addTeam(); });
-        $("#generateButton").click(function () {
-            drawChart(calcPositions());
-        });
+        $("#chart-tab").click(function () { drawChart(calcPositions()); });
     }());
 }($));
