@@ -108,11 +108,16 @@ BumpChart = (function ($) {
             scoreString,
             scoreWidth,
             scoreHeight = 20,
+            deltaString,
+            deltaWidth,
+            deltaHeight = 20,
             ctx,
             colourIndex,
             colourMap = {},
             padding = 20,
-            i;
+            i,
+            x,
+            y;
 
         ctx = $("#graph")[0].getContext("2d");
         ctx.canvas.height = rowHeight * Object.keys(teamInfo).length;
@@ -199,6 +204,27 @@ BumpChart = (function ($) {
                         columnsStart + columnWidth * i - scoreWidth / 2,
                         (positions[i] + 0.5) * rowHeight + scoreHeight / 2
                     );
+                }
+            }
+        }
+
+        // Draw the deltas
+        ctx.font = deltaHeight.toString() + "pt Arial";
+        for (teamName in teamInfo) {
+            if (teamInfo.hasOwnProperty(teamName)) {
+                positions = teamInfo[teamName].positions;
+                scores = teamInfo[teamName].scores;
+
+                ctx.fillStyle = colourMap[teamName];
+                for (i = 1; i < positions.length; i += 1) {
+                    deltaString = "+" + (scores[i] - scores[i - 1]).toString();
+                    deltaWidth = ctx.measureText(deltaString).width;
+
+                    x = columnsStart + (columnWidth * (i * 2 - 1) / 2);
+                    x -= deltaWidth / 2;
+                    y = (positions[i] + positions[i - 1] + 1) * rowHeight / 2;
+
+                    ctx.fillText(deltaString, x, y);
                 }
             }
         }
