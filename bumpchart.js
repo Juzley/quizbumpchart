@@ -85,11 +85,11 @@ BumpChart = (function ($) {
         var colours = [
             "red",
             "orange",
-            "yellow",
             "green",
             "blue",
             "indigo",
-            "violet"
+            "violet",
+            "black"
         ];
 
         return colours[colourIndex % colours.length];
