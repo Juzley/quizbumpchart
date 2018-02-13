@@ -37,7 +37,7 @@ BumpChart = (function ($) {
                     if (rounds.length === i) {
                         rounds.push({});
                     }
-                    rounds[i][teamName] = parseInt(score, 10);
+                    rounds[i][teamName] = parseFloat(score);
                 }
             }
         });
